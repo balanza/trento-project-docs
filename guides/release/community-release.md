@@ -21,6 +21,27 @@ Releasing a new version consists in:
 - create a GitHub Release on the repository page;
 - submit the version to the internal build service for distribution.
 
+### Release workflow
+
+The entire process follows this flowchart:
+```mermaid
+flowchart TD
+    A[Choose history point, main or tag] --> A1[checkout release branch]
+    A1 --> C[Bump version]
+    C --> D[Update changelog]
+    D --> E[Tag version]
+    E --> F{open PR}
+    F --> |approved|G[Merge into main]
+    F --> |rejected|B[Fix code]
+    B --> D
+    G --> H[Open draft GitHub Release]
+    H --> I[Submit to build system]
+    I --> J{Build validation}
+    J --> |approved|K[Publish GitHub Release]
+    J --> |rejected|L[Close GitHub Release]
+    L --> M[Discard version]
+```
+
 ## Release example scenarios
 
 This is a collection of examples of how to handle release in different scenarios while developing and avoiding merge freeze.
